@@ -28,7 +28,7 @@ public class ClientService {
         return userRepository.findByUserId(userId);
     }
 
-    public ServerResponse signUp(ClientRequest clientRequest) {
+    public ServerResponse signUp(ClientRequest clientRequest) { // Sing Up 은 Repository save 만 할 수 있도록 변경
         System.out.println("Sign Up");
 
         UserEntity userEntity =
@@ -46,7 +46,7 @@ public class ClientService {
         return ServerResponse.builder().accessToken(null).refreshToken(null).msg("Sign Up Success").build();
     }
 
-    public ServerResponse signIn(ClientRequest clientRequest) {
+    public ServerResponse signIn(ClientRequest clientRequest) { // sign In 은 처음으로 Access Token 과 Refresh Token 을 발급하도록 설정 
         System.out.println("Sign In");
 
         UserEntity userEntity =
@@ -72,7 +72,7 @@ public class ClientService {
         }
     }
 
-    public List<UserEntity> info() {
+    public List<UserEntity> info() { // token 검증이 필요한 곳은 interceptor 로 항상 넘어가지 못하게 설정할 것
         System.out.println("Info");
         return userRepository.findAll();
     }
