@@ -68,7 +68,7 @@ public class ClientService {
             refreshToken = tokenUtils.generateRefreshToken((userEntity));
             tokenEntity.refreshTokenUpdate(refreshToken);
 
-            return ServerResponse.builder().accessToken(accessToken).refreshToken(refreshToken).msg("Direct Refrems").build();
+            return ServerResponse.builder().accessToken(accessToken).refreshToken(refreshToken).msg("Direct Refresh").build();
         }
     }
 
