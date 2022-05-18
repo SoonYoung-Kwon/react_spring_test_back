@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 @Getter
 @RequiredArgsConstructor
-@Table(name = "Token")
-@Entity
+@Table(name = "Token") // table은 이름 지정
+@Entity // entity는 class 이름대로
 public class TokenEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

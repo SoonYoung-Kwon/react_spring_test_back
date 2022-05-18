@@ -106,14 +106,12 @@ public class TokenUtils {
         System.out.println("Get Claims in Token");
 
         if (type.equals("ACCESS")) {
-            System.out.println("1");
             return Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary(ACCESS_KEY)) // parse Binary with REFRESH_KEY
                     .parseClaimsJws(token)
                     .getBody();
         }
         else {
-            System.out.println("2");
             return Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary(REFRESH_KEY)) // parse Binary with REFRESH_KEY
                     .parseClaimsJws(token)
