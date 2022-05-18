@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,18 +32,23 @@ public class Controller {
     }
 
     @PostMapping("/user/signIn")
-    public ResponseEntity signIn(@RequestBody ClientRequest clientRequest) throws ECMAException {
+    public ResponseEntity signIn(@RequestBody ClientRequest clientRequest, HttpServletRequest request) throws ECMAException {
         System.out.println("Controller - Sign In");
 
-        return ResponseEntity.ok().body(clientService.signIn(clientRequest));
+        return ResponseEntity.ok().body(clientService.signIn(clientRequest, request));
+    }
+
+    @PostMapping("/renew")
+    public ResponseEntity renewAccessToken(@RequestBody ClientRequest clientRequest, HttpServletRequest request) {
+        System.out.println("Controller - renewAccessToken");
+        return ResponseEntity.ok().body(clientService.renewAccessToken(clientRequest, request));
     }
 
     @GetMapping("/info")
-    public ResponseEntity<List<UserEntity>> info() {
+    public ResponseEntity<List<UserEntity>> info(ClientRequest clientRequest, HttpServletRequest request) {
         System.out.println("Controller - Info");
 
-
-        return ResponseEntity.ok().body(clientService.info());
+        return ResponseEntity.ok().body(clientService.info(clientRequest, request));
     }
 
     @GetMapping("/token/info")
@@ -54,6 +60,7 @@ public class Controller {
 
     @GetMapping("/message")
     public String message() {
+        System.out.println("Controller - msg");
         return "message";
     }
 }

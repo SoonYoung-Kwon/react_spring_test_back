@@ -28,10 +28,8 @@ public class RequestInterceptor implements HandlerInterceptor{ // 여기에서 t
         String accessToken = request.getHeader("ACCESS_TOKEN");
 
         if(accessToken != null) {
-            if(tokenUtils.isValidToken(accessToken, "ACCESS")) {
-                System.out.println("Has TOKEN");
-                return true;
-            }
+            System.out.println("Has TOKEN");
+            return true;
         }
 
         System.out.println("Has Not TOKEN");

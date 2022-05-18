@@ -16,11 +16,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TokenUtils {
 
-    private final String ACCESS_KEY = "access";
-    private final String REFRESH_KEY = "refresh";
+    private final String ACCESS_KEY = "ACCESS";
+    private final String REFRESH_KEY = "REFRESH";
 
-    private final int ACCESS_TIME = 3 * 60 * 1000;
-    private final int REFRESH_TIME = 3 * 60 * 1000;
+    private final int ACCESS_TIME = 10 * 1000;
+    private final int REFRESH_TIME = 24 * 60 * 60 * 1000;
 
     public String generateAccessToken(UserEntity userEntity) {
         System.out.println("Generate Access Token");
@@ -46,23 +46,23 @@ public class TokenUtils {
                 .compact(); // Generate
     }
 
-    public boolean isValidToken(String token, String type) {
-        System.out.println("Is Valid Refresh Token");
+    public String isValidToken(String token, String type) {
+        System.out.println("Is Valid " + type + " Token");
 
         try{
             Claims accessClaims = getClaimsToken(token, type);
             System.out.println("Access User ID : " + accessClaims.get("userId"));
             System.out.println("Access Time Limit : " + accessClaims.getExpiration());
-            return true;
+            return "true";
         } catch (ExpiredJwtException exception) {
             System.out.println("Expired User");
-            return true;
+            return "expired";
         } catch (JwtException exception) {
             System.out.println("Token Tampered");
-            return false;
+            return "false";
         } catch (NullPointerException exception) {
             System.out.println("Access Token is null");
-            return false;
+            return "false";
         }
     }
 
@@ -105,15 +105,19 @@ public class TokenUtils {
     private Claims getClaimsToken(String token, String type) {
         System.out.println("Get Claims in Token");
 
-        if (type.equals("ACCESS"))
+        if (type.equals("ACCESS")) {
+            System.out.println("1");
             return Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary(ACCESS_KEY)) // parse Binary with REFRESH_KEY
                     .parseClaimsJws(token)
                     .getBody();
-        else
+        }
+        else {
+            System.out.println("2");
             return Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary(REFRESH_KEY)) // parse Binary with REFRESH_KEY
                     .parseClaimsJws(token)
                     .getBody();
+        }
     }
 }
