@@ -48,11 +48,8 @@ public class ClientService {
     }
 
     @Transactional // 없으면 refreshTokenUpdate 결과 없음
-    public ServerResponse signIn(ClientRequest clientRequest, HttpServletRequest request) { // sign In 은 처음으로 Access Token 과 Refresh Token 을 발급하도록 설정
+    public ServerResponse signIn(ClientRequest clientRequest) { // sign In 은 처음으로 Access Token 과 Refresh Token 을 발급하도록 설정
         System.out.println("Sign In");
-
-        if(request.getHeader("TEST") == "1")
-            return ServerResponse.builder().accessToken(null).refreshToken(null).msg(null).build();
 
         String accessToken = null;
         String refreshToken = null;
@@ -103,9 +100,15 @@ public class ClientService {
                         tokenRepository.findByUserEntityId(userEntity.getId())
                                 .orElseThrow(() -> new IllegalArgumentException("Token Not Found"));
                 String accessToken = tokenUtils.generateAccessToken(userEntity);
-                return ServerResponse.builder().accessToken(accessToken).refreshToken(tokenEntity.getRefreshToken()).msg("Renew Access Token").build();
+                return ServerResponse.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(tokenEntity.getRefreshToken())
+                        .msg("Renew Access Token").build();
             default:
-                return ServerResponse.builder().accessToken(null).refreshToken(null).msg("Please Sign In Again").build();
+                return ServerResponse.builder()
+                        .accessToken(null)
+                        .refreshToken(null)
+                        .msg("Please Sign In Again").build();
         }
     }
 

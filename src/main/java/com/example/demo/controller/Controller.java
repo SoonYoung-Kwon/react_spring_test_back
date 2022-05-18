@@ -8,6 +8,7 @@ import jdk.nashorn.internal.runtime.ECMAException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -32,10 +33,11 @@ public class Controller {
     }
 
     @PostMapping("/user/signIn")
-    public ResponseEntity signIn(@RequestBody ClientRequest clientRequest, HttpServletRequest request) throws ECMAException {
+    public ResponseEntity signIn(@RequestBody ClientRequest clientRequest)
+            throws ECMAException {
         System.out.println("Controller - Sign In");
 
-        return ResponseEntity.ok().body(clientService.signIn(clientRequest, request));
+        return ResponseEntity.ok().body(clientService.signIn(clientRequest));
     }
 
     @PostMapping("/renew")

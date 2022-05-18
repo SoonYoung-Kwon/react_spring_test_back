@@ -35,7 +35,7 @@ public class TokenUtils {
     }
 
     public String generateRefreshToken(UserEntity userEntity) {
-        System.out.println("Generate Access Token");
+        System.out.println("Generate Refresh Token");
 
         return Jwts.builder()
                 .setSubject("JWT") // Name

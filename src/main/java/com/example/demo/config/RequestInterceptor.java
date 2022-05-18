@@ -17,7 +17,8 @@ public class RequestInterceptor implements HandlerInterceptor{ // 여기에서 t
     private final TokenUtils tokenUtils;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
 
         if(HttpMethod.OPTIONS.matches(request.getMethod())){
             return true;
